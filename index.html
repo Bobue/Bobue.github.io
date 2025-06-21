@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>간단 질문 페이지</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 50px; }
+    .page { display: none; }
+    .active { display: block; }
+    button { margin: 10px; padding: 10px 20px; font-size: 16px; }
+  </style>
+</head>
+<body>
+
+  <!-- 1. 시작 페이지 -->
+  <div id="start" class="page active">
+    <h1>질문을 시작할까요?</h1>
+    <button onclick="nextPage('q1')">시작하기</button>
+  </div>
+
+  <!-- 2. 성별 -->
+  <div id="q1" class="page">
+    <h2>성별은?</h2>
+    <button onclick="selectAnswer('gender', '남자')">남자</button>
+    <button onclick="selectAnswer('gender', '여자')">여자</button>
+  </div>
+
+  <!-- 3. 나이 -->
+  <div id="q2" class="page">
+    <h2>나이는?</h2>
+    <button onclick="selectAnswer('age', '20대')">20대</button>
+    <button onclick="selectAnswer('age', '30대')">30대</button>
+  </div>
+
+  <!-- 4. 자취 여부 -->
+  <div id="q3" class="page">
+    <h2>자취를 하나요?</h2>
+    <button onclick="selectAnswer('living', '유')">유</button>
+    <button onclick="selectAnswer('living', '무')">무</button>
+  </div>
+
+  <!-- 5. 결과 페이지 -->
+  <div id="result" class="page">
+    <h2 id="resultText">결과입니다.</h2>
+    <button onclick="restart()">다시하기</button>
+  </div>
+
+  <script>
+    const answers = {};
+
+    function nextPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+    }
+
+    function selectAnswer(key, value) {
+      answers[key] = value;
+
+      if (key === 'gender') nextPage('q2');
+      else if (key === 'age') nextPage('q3');
+      else if (key === 'living') showResult();
+    }
+
+    function showResult() {
+      let resultMsg = `당신은 ${answers.gender}, ${answers.age}, 자취${answers.living === '유' ? '하는' : '안 하는'} 사람이군요!`;
+
+      // 예시로 특별한 조건에 따라 다른 문구 출력 가능
+      if (answers.gender === '여자' && answers.age === '20대' && answers.living === '유') {
+        resultMsg = "독립적인 20대 여성, 멋져요!";
+      }
+
+      document.getElementById('resultText').innerText = resultMsg;
+      nextPage('result');
+    }
+
+    function restart() {
+      answers.gender = '';
+      answers.age = '';
+      answers.living = '';
+      nextPage('start');
+    }
+  </script>
+
+</body>
+</html>
