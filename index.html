@@ -22,17 +22,31 @@
     align-items: center;
   }
 
+  .container {
+    position: relative; /* 페이지만 겹치도록 기준 설정 */
+    max-width: 400px;
+    width: 90%;
+  }
+
   .page {
-    display: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
     background: rgba(255, 255, 255, 0.8); /* 반투명 흰색 */
     padding: 30px;
     border-radius: 20px;
-    max-width: 90%;
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    position: absolute; /* 겹치게 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .active {
-    display: block;
+    opacity: 1;
+    pointer-events: auto;
+    position: relative; /* 활성 페이지는 정상 흐름 */
   }
 
   button {
@@ -96,8 +110,13 @@
     const answers = {};
 
     function nextPage(pageId) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById(pageId).classList.add('active');
+      document.querySelectorAll('.page').forEach(p => {
+        if (p.id === pageId) {
+          p.classList.add('active');
+        } else {
+          p.classList.remove('active');
+        }
+      });
     }
 
     function selectAnswer(key, value) {
