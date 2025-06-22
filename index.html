@@ -4,6 +4,19 @@
   <meta charset="UTF-8" />
   <title>간단 질문 페이지</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 미리보기 메타 태그 (IAM 표시용) -->
+  <meta name="description" content="IAM" />
+  <meta property="og:title" content="IAM" />
+  <meta property="og:description" content="IAM" />
+  <meta property="og:image" content="https://bobue.github.io/background.jpg" />
+  <meta property="og:url" content="https://bobue.github.io/yourpage.html" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="IAM" />
+  <meta name="twitter:description" content="IAM" />
+  <meta name="twitter:image" content="https://bobue.github.io/background.jpg" />
+
 <style>
   html, body {
     margin: 0;
@@ -133,7 +146,6 @@
       if (answers.gender === '여자' && answers.age === '20대' && answers.living === '무') {
         resultMsg = "하은님! 역시 믿고 있었어요:)";
       }
-      
 
       document.getElementById('resultText').innerText = resultMsg;
       nextPage('result');
