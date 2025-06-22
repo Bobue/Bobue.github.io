@@ -130,6 +130,10 @@
       if (answers.gender === '여자' && answers.age === '20대' && answers.living === '유') {
         resultMsg = "파격적인 20대 여성, 멋져요!";
       }
+      if (answers.gender === '여자' && answers.age === '20대' && answers.living === '무') {
+        resultMsg = "하은님! 역시 믿고 있었어요:)";
+      }
+      }
 
       document.getElementById('resultText').innerText = resultMsg;
       nextPage('result');
