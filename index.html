@@ -5,20 +5,7 @@
   <title>성격 테스트</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body {$1
-      overflow: hidden;
-      height: 100vh;
-
-    .container {
-      width: 100%;
-      max-width: 420px;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-      text-align: center;
-      padding: 24px 18px;
-      box-sizing: border-box;
-    }
+    body {$1overflow: auto;$2}
 
     .progress {
       height: 10px;
@@ -91,10 +78,18 @@
       <p class="question" id="questionText"></p>
       <div id="options"></div>
     </div>
-    <div id="result" class="page">
-      <h2>결과</h2>
-      <p id="resultText"></p>
-      <button onclick="restart()" class="option">다시하기</button>
+    <div id="result" class="page" style="overflow-y: auto; max-height: 100vh;">
+  <div style="text-align: center;">
+    <img id="resultImage" src="" alt="결과 이미지" style="width: 100%; max-height: 320px; object-fit: cover; border-radius: 20px 20px 0 0;" />
+    <h2 style="font-size: 28px; margin: 20px 0 10px; color: #fff; background: #603913; display: inline-block; padding: 8px 20px; border-radius: 20px;">당신은 <span id="resultTitle">음료</span></h2>
+  </div>
+  <p id="resultText" style="padding: 20px; font-size: 16px; line-height: 1.6; text-align: left; color: #333;"></p>
+  <div style="display: flex; flex-direction: column; gap: 12px; padding: 0 20px 40px;">
+    <button class="option" onclick="alert('공유하기')">📤 결과 공유하기</button>
+    <button class="option" onclick="alert('다른 음료 보기')">🍹 다른 음료 보기</button>
+    <button class="option" onclick="alert('내 MBTI 보기')">🔍 내 MBTI 보기</button>
+    <button class="option" onclick="restart()">🔁 테스트 다시하기</button>
+  </div>
     </div>
   </div>
 
@@ -219,7 +214,16 @@
       const counts = {};
       answers.forEach(num => counts[num] = (counts[num] || 0) + 1);
       const top = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+      const drinkNames = {
+        1: "아메리카노",
+        2: "카야크림라떼",
+        3: "콜드브루",
+        4: "카페모카",
+        5: "바닐라 레드벨벳 라떼"
+      };
       document.getElementById("resultText").innerText = resultMap[top];
+      document.getElementById("resultTitle").innerText = drinkNames[top];
+      document.getElementById("resultImage").src = `https://bobue.github.io/result${top}.jpg`;
     }
 
     function restart() {
