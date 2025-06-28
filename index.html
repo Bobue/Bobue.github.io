@@ -16,7 +16,7 @@
       align-items: center;
       min-height: 100vh;
       margin: 0;
-      padding: 8vh 4vw;
+      padding: 4vh 4vw;
       box-sizing: border-box;
       overflow: hidden;
       text-align: center;
@@ -199,7 +199,8 @@
       image.src = `https://bobue.github.io/background${current + 1}.jpg`;
       image.alt = "질문 이미지";
       image.style.width = "100%";
-      image.style.maxHeight = "160px";
+      image.style.height = "160px"; // 고정 높이
+      image.style.maxHeight = "160px"; // 최대값도 유지
       image.style.objectFit = "cover";
       image.style.borderRadius = "16px";
       image.style.marginBottom = "20px";
