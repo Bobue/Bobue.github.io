@@ -6,65 +6,103 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
-      font-family: sans-serif;
-      background: #fefefe;
+      font-family: 'Apple SD Gothic Neo', sans-serif;
+      background-image: url('https://bobue.github.io/background.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       margin: 0;
     }
+
     .container {
       width: 90%;
       max-width: 500px;
       padding: 30px;
-      background: #fff;
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 20px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      text-align: center;
     }
+
+    .progress {
+      height: 10px;
+      background: #eee;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: #f8c22c;
+      transition: width 0.3s ease;
+    }
+
     .page {
       display: none;
     }
+
     .active {
       display: block;
     }
+
     h2 {
-      font-size: 20px;
-      margin-bottom: 20px;
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #f8c22c;
     }
-    button {
+
+    p.question {
+      font-size: 16px;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    button.option {
       display: block;
       margin: 10px auto;
-      padding: 12px 20px;
-      font-size: 16px;
-      background: #333;
-      color: #fff;
+      padding: 15px 20px;
+      font-size: 15px;
+      background: #f8c22c;
+      color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 999px;
       cursor: pointer;
       width: 100%;
-      max-width: 300px;
+      max-width: 350px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
-    button:hover {
-      background: #555;
+
+    button.option:hover {
+      background: #e3a913;
+    }
+
+    #resultText {
+      white-space: pre-line;
+      font-size: 18px;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Start Page -->
-    <div id="start" class="page active">
-      <h2>당신의 성격을 알려드릴게요!</h2>
-      <button onclick="nextPage(0)">시작하기</button>
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
     </div>
-
-    <!-- Questions -->
-    <div id="questions"></div>
-
-    <!-- Result -->
+    <div id="questionBox" class="page active">
+      <h2 id="questionNumber">Q1.</h2>
+      <p class="question" id="questionText"></p>
+      <div id="options"></div>
+    </div>
     <div id="result" class="page">
-      <h2 id="resultText">결과입니다</h2>
-      <button onclick="restart()">다시하기</button>
+      <h2>결과</h2>
+      <p id="resultText"></p>
+      <button onclick="restart()" class="option">다시하기</button>
     </div>
   </div>
 
@@ -76,8 +114,8 @@
           { text: "조용하지만 또렷한 결을 가진 사람", type: 1 },
           { text: "따뜻한 말 한마디에 쉽게 설레는 사람", type: 2 },
           { text: "감정의 파도에 몸을 싣는 편", type: 3 },
-          { text: "짧지만 강하게 남는 인상", type: 4 }
-        ]
+          { text: "짧지만 강하게 남는 인상", type: 4 },
+        ],
       },
       {
         q: "오늘의 나와 제일 어울리는 날씨는?",
@@ -85,8 +123,8 @@
           { text: "맑고 바람 부는 가을 오후", type: 1 },
           { text: "살랑한 햇살의 봄날", type: 2 },
           { text: "흐리지만 기분 좋은 흐림", type: 3 },
-          { text: "비 오는 날의 집중력 터짐", type: 5 }
-        ]
+          { text: "비 오는 날의 집중력 터짐", type: 5 },
+        ],
       },
       {
         q: "카페에 간다면 나는?",
@@ -94,8 +132,8 @@
           { text: "창가 자리에 앉아 조용히 책 읽는 타입", type: 1 },
           { text: "친구와 도란도란 이야기 나누는 타입", type: 2 },
           { text: "음악에 귀 기울이며 혼자 분위기 타는 타입", type: 3 },
-          { text: "딱 필요한 말만 하고 금방 일어나는 타입", type: 4 }
-        ]
+          { text: "딱 필요한 말만 하고 금방 일어나는 타입", type: 4 },
+        ],
       },
       {
         q: "설렘을 느낄 때는?",
@@ -103,8 +141,8 @@
           { text: "계획이 잘 풀릴 때", type: 4 },
           { text: "좋아하는 사람과 따뜻한 대화할 때", type: 2 },
           { text: "도전 앞에 혼자 선 나 자신이 멋질 때", type: 3 },
-          { text: "소소한 일상에서 조용한 행복을 느낄 때", type: 1 }
-        ]
+          { text: "소소한 일상에서 조용한 행복을 느낄 때", type: 1 },
+        ],
       },
       {
         q: "마음이 복잡할 때 나는...",
@@ -112,8 +150,8 @@
           { text: "일단 감정을 잠깐 밀어두고 정리부터 한다", type: 4 },
           { text: "가까운 사람에게 조용히 털어놓는다", type: 2 },
           { text: "음악이나 글로 감정을 해소한다", type: 3 },
-          { text: "혼자 산책하거나 집중하는 무언가를 한다", type: 1 }
-        ]
+          { text: "혼자 산책하거나 집중하는 무언가를 한다", type: 1 },
+        ],
       },
       {
         q: "한 장면으로 나를 표현한다면?",
@@ -121,9 +159,9 @@
           { text: "정리된 책상 위, 따뜻한 조명 아래", type: 1 },
           { text: "햇살 가득한 창가와 커피잔", type: 2 },
           { text: "낡은 LP에서 흐르는 오래된 음악", type: 3 },
-          { text: "조용한 카페 창밖의 비 내리는 거리", type: 5 }
-        ]
-      }
+          { text: "조용한 카페 창밖의 비 내리는 거리", type: 5 },
+        ],
+      },
     ];
 
     const resultMap = {
@@ -134,57 +172,53 @@
       5: "🍰 바닐라 레드벨벳 라떼\n- 감성 충만한 예술가 타입, 감정을 섬세하게 표현해요."
     };
 
-    let answers = [];
     let current = 0;
+    let answers = [];
 
-    const questionsDiv = document.getElementById("questions");
-
-    questions.forEach((q, i) => {
-      const page = document.createElement("div");
-      page.className = "page";
-      page.id = "q" + i;
-      const title = document.createElement("h2");
-      title.innerText = q.q;
-      page.appendChild(title);
-
-      q.options.forEach((opt, idx) => {
+    function loadQuestion() {
+      const q = questions[current];
+      document.getElementById("questionNumber").innerText = `Q${current + 1}.`;
+      document.getElementById("questionText").innerText = q.q;
+      document.getElementById("options").innerHTML = "";
+      q.options.forEach(opt => {
         const btn = document.createElement("button");
+        btn.className = "option";
         btn.innerText = opt.text;
         btn.onclick = () => {
           answers.push(opt.type);
-          nextPage(i + 1);
+          current++;
+          updateProgress();
+          if (current < questions.length) loadQuestion();
+          else showResult();
         };
-        page.appendChild(btn);
+        document.getElementById("options").appendChild(btn);
       });
+    }
 
-      questionsDiv.appendChild(page);
-    });
-
-    function nextPage(index) {
-      document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-      if (index < questions.length) {
-        document.getElementById("q" + index).classList.add("active");
-      } else {
-        showResult();
-      }
+    function updateProgress() {
+      const percent = (current / questions.length) * 100;
+      document.getElementById("progressBar").style.width = percent + "%";
     }
 
     function showResult() {
-      const counts = {};
-      answers.forEach(num => {
-        counts[num] = (counts[num] || 0) + 1;
-      });
-
-      const mostCommon = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
-      document.getElementById("resultText").innerText = resultMap[mostCommon];
+      document.getElementById("questionBox").classList.remove("active");
       document.getElementById("result").classList.add("active");
+      const counts = {};
+      answers.forEach(num => counts[num] = (counts[num] || 0) + 1);
+      const top = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+      document.getElementById("resultText").innerText = resultMap[top];
     }
 
     function restart() {
-      answers = [];
       current = 0;
-      nextPage(0);
+      answers = [];
+      updateProgress();
+      document.getElementById("result").classList.remove("active");
+      document.getElementById("questionBox").classList.add("active");
+      loadQuestion();
     }
+
+    loadQuestion();
   </script>
 </body>
 </html>
