@@ -89,7 +89,7 @@
     <div id="questionBox" class="page active">
       <h2 id="questionNumber">Q1.</h2>
       <p class="question" id="questionText"></p>
-      <div id="options" style="display: flex; flex-direction: column; gap: 10px;"></div>
+      <div id="options"></div>
     </div>
     <div id="result" class="page">
       <h2>결과</h2>
@@ -172,8 +172,16 @@
       document.getElementById("questionNumber").innerText = `Q${current + 1}.`;
       document.getElementById("questionText").innerText = q.q;
       document.getElementById("options").innerHTML = "";
-      document.getElementById("options").style.maxHeight = (current === 5 ? '250px' : 'unset');
-      document.getElementById("options").style.overflowY = (current === 5 ? 'auto' : 'unset');
+      const optionsWrapper = document.createElement("div");
+      optionsWrapper.style.display = "flex";
+      optionsWrapper.style.flexDirection = "column";
+      optionsWrapper.style.gap = "10px";
+      if (current === 5) {
+        optionsWrapper.style.maxHeight = '320px';
+        optionsWrapper.style.overflowY = 'auto';
+        optionsWrapper.style.paddingRight = '6px';
+      }
+
       const image = document.createElement("img");
       image.src = `https://bobue.github.io/background${current + 1}.jpg`;
       image.alt = "질문 이미지";
@@ -183,6 +191,7 @@
       image.style.borderRadius = "16px";
       image.style.marginBottom = "20px";
       document.getElementById("options").appendChild(image);
+      document.getElementById("options").appendChild(optionsWrapper);
       q.options.forEach(opt => {
         const btn = document.createElement("button");
         btn.className = "option";
@@ -194,7 +203,7 @@
           if (current < questions.length) loadQuestion();
           else showResult();
         };
-        document.getElementById("options").appendChild(btn);
+        optionsWrapper.appendChild(btn);
       });
     }
 
