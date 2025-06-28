@@ -5,20 +5,9 @@
   <title>성격 테스트</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body {
-      font-family: 'Apple SD Gothic Neo', sans-serif;
-      background-image: url('https://bobue.github.io/background.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 8vh 4vw; /* 모바일에서 적당한 여백 부여 */
-      box-sizing: border-box;
-    }
+    body {$1
+      overflow: hidden;
+      height: 100vh;
 
     .container {
       width: 100%;
@@ -100,7 +89,7 @@
     <div id="questionBox" class="page active">
       <h2 id="questionNumber">Q1.</h2>
       <p class="question" id="questionText"></p>
-      <div id="options"></div>
+      <div id="options" style="display: flex; flex-direction: column; gap: 10px;"></div>
     </div>
     <div id="result" class="page">
       <h2>결과</h2>
@@ -183,10 +172,14 @@
       document.getElementById("questionNumber").innerText = `Q${current + 1}.`;
       document.getElementById("questionText").innerText = q.q;
       document.getElementById("options").innerHTML = "";
+      document.getElementById("options").style.maxHeight = (current === 5 ? '250px' : 'unset');
+      document.getElementById("options").style.overflowY = (current === 5 ? 'auto' : 'unset');
       const image = document.createElement("img");
       image.src = `https://bobue.github.io/background${current + 1}.jpg`;
       image.alt = "질문 이미지";
       image.style.width = "100%";
+      image.style.maxHeight = "160px";
+      image.style.objectFit = "cover";
       image.style.borderRadius = "16px";
       image.style.marginBottom = "20px";
       document.getElementById("options").appendChild(image);
