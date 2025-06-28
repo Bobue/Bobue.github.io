@@ -183,6 +183,13 @@
       document.getElementById("questionNumber").innerText = `Q${current + 1}.`;
       document.getElementById("questionText").innerText = q.q;
       document.getElementById("options").innerHTML = "";
+      const image = document.createElement("img");
+      image.src = `https://bobue.github.io/background${current + 1}.jpg`;
+      image.alt = "질문 이미지";
+      image.style.width = "100%";
+      image.style.borderRadius = "16px";
+      image.style.marginBottom = "20px";
+      document.getElementById("options").appendChild(image);
       q.options.forEach(opt => {
         const btn = document.createElement("button");
         btn.className = "option";
